@@ -1,7 +1,50 @@
+import React, { useState } from 'react'
+import emailjs from '@emailjs/browser'
 import '../index.css'
 import Navbar from './Navbar'
 
 function ContactPage() {
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [subject, setSubject] = useState('')
+  const [message, setMessage] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAIL_SERVICE_ID,
+        import.meta.env.VITE_EMAIL_TEMPLATE_ID,
+        {
+          from_name: `${firstName} ${lastName}`,
+          from_email: email,
+          subject: subject,
+          message: message,
+        },
+        import.meta.env.VITE_EMAIL_PUBLIC_KEY
+      )
+      
+      alert('Message sent successfully!')
+      
+      // Reset form
+      setFirstName('')
+      setLastName('')
+      setEmail('')
+      setSubject('')
+      setMessage('')
+    } catch (error) {
+      alert('Failed to send message. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
+
+  }
+  
+
   return (
     <>
       <Navbar activePage="contact" />
@@ -17,7 +60,7 @@ function ContactPage() {
           </div>
 
           <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-white/20">
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -25,6 +68,9 @@ function ContactPage() {
                   </label>
                   <input
                     type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white transition-all"
                     placeholder="Your first name"
                   />
@@ -35,6 +81,9 @@ function ContactPage() {
                   </label>
                   <input
                     type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white transition-all"
                     placeholder="Your last name"
                   />
@@ -47,6 +96,9 @@ function ContactPage() {
                 </label>
                 <input
                   type="email"
+                  value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white transition-all"
                   placeholder="your.email@example.com"
                 />
@@ -58,6 +110,9 @@ function ContactPage() {
                 </label>
                 <input
                   type="text"
+                  value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
+                    required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white transition-all"
                   placeholder="What is this about?"
                 />
@@ -77,9 +132,11 @@ function ContactPage() {
               <div>
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="w-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-4 px-6 rounded-lg hover:from-indigo-700 hover:to-blue-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all font-medium text-lg shadow-lg transform hover:scale-[1.02]"
                 >
                   Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
               </div>
             </form>
