@@ -2,9 +2,16 @@
 import '../index.css'
 import Navbar from './Navbar'
 import QuestionCard from './QuestionCard';
+import {useState} from 'react'
+import CreateQuestion from './CreateQuestion'
 
 function HomePage() {
-  const questions = [
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const openModal = () => setIsModalOpen(true)
+  const closeModal = () => setIsModalOpen(false)
+  
+  const [questions, setQuestions] = useState([
     {
       id: 1,
       emoji: "🥤",
@@ -47,7 +54,19 @@ function HomePage() {
       description: "A musical nightmare scenario. What's your choice?",
       iconBgColor: "bg-blue-100 dark:bg-blue-900"
     }
-  ];
+  ])
+
+  const addQuestion = (newQuestion: {title: string; description: string; emoji: string;}) => {
+    const question = {
+      id: Date.now(),
+      title: newQuestion.title,
+      description: newQuestion.description,
+      emoji: newQuestion.emoji,
+      iconBgColor: "bg-indigo-100 dark:bg-indigo-900"
+    }
+    setQuestions(prev => [...prev, question])
+    closeModal()
+  }
 
   return (
     <>
@@ -76,12 +95,18 @@ function HomePage() {
           </div>
 
           <div className="text-center mt-16">
-            <button className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg">
+            <button className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg"
+            onClick={openModal}>
               Create Your Own Question
             </button>
           </div>
         </div>
       </div>
+      <CreateQuestion 
+      isOpen={isModalOpen} 
+      onClose={closeModal}
+      onSubmit={addQuestion} />
+
     </>
   )
 }
