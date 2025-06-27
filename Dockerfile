@@ -3,15 +3,13 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
+COPY package*.json ./
 
-# Install dependencies
-RUN yarn install --frozen-lockfile && yarn cache clean --force
+RUN npm ci --only=production && npm cache clean --force
 
 COPY . .
 
-# Build for production
-RUN yarn build
+RUN npm run build
 
 # production stage
 FROM nginx:alpine
