@@ -124,6 +124,9 @@ function ContactPage() {
                 </label>
                 <textarea
                   rows={5}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white transition-all resize-none"
                   placeholder="Tell us more about your inquiry..."
                 ></textarea>
@@ -133,9 +136,8 @@ function ContactPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-4 px-6 rounded-lg hover:from-indigo-700 hover:to-blue-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all font-medium text-lg shadow-lg transform hover:scale-[1.02]"
+                  className="w-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-4 px-6 rounded-lg hover:from-indigo-700 hover:to-blue-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all font-medium text-lg shadow-lg transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Send Message
                   {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
               </div>
