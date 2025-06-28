@@ -5,15 +5,17 @@ interface NavbarProps {
 
 const Navbar = ({ activePage }: NavbarProps) => {
     return (
-        <nav className="bg-white shadow-md sticky top-0 z-50">
+        <nav className="bg-slate-900/80 backdrop-blur-lg border-b border-white/10 sticky top-0 z-50 shadow-lg">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-                <h1 className="text-xl font-bold text-indigo-600">Would you Rather?</h1>
-                <ul className="flex space-x-6 text-gray-600 font-medium">
+                <h1 className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                    Would you Rather?
+                </h1>
+                <ul className="flex space-x-6 text-gray-300 font-medium">
                     <li>
                         <a 
                             href="/" 
-                            className={`hover:text-indigo-600 transition-colors ${
-                                activePage === 'home' ? 'text-indigo-600 font-semibold' : ''
+                            className={`hover:text-cyan-400 transition-colors duration-300 ${
+                                activePage === 'home' ? 'text-cyan-400 font-semibold' : ''
                             }`}
                         >
                             Home
@@ -22,8 +24,8 @@ const Navbar = ({ activePage }: NavbarProps) => {
                     <li>
                         <a 
                             href="/about" 
-                            className={`hover:text-indigo-600 transition-colors ${
-                                activePage === 'about' ? 'text-indigo-600 font-semibold' : ''
+                            className={`hover:text-cyan-400 transition-colors duration-300 ${
+                                activePage === 'about' ? 'text-cyan-400 font-semibold' : ''
                             }`}
                         >
                             About
@@ -32,8 +34,8 @@ const Navbar = ({ activePage }: NavbarProps) => {
                     <li>
                         <a 
                             href="/contact" 
-                            className={`hover:text-indigo-600 transition-colors ${
-                                activePage === 'contact' ? 'text-indigo-600 font-semibold' : ''
+                            className={`hover:text-cyan-400 transition-colors duration-300 ${
+                                activePage === 'contact' ? 'text-cyan-400 font-semibold' : ''
                             }`}
                         >
                             Contact
