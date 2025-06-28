@@ -1,5 +1,5 @@
 # build stage
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
@@ -11,7 +11,7 @@ COPY . .
 
 RUN npm run build
 
-# production stage
+# Production stage
 FROM nginx:alpine
 
 WORKDIR /usr/share/nginx/html
