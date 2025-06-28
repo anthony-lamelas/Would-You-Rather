@@ -19,6 +19,9 @@ WORKDIR /usr/share/nginx/html
 # Remove default nginx files
 RUN rm -rf ./*
 
+# Copy custom nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Copy built app from builder stage
 COPY --from=builder /app/dist .
 
